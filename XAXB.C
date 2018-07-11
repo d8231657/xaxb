@@ -1,0 +1,136 @@
+#include<stdlib.h>
+#include<time.h>
+main()
+{
+	static char table[10000],org_table[10000];
+	char roung_number;
+	int x[4],y[10],i,j,k,a,b,c,d,gass_number,gass[4],player[4],counter,counter2;
+	randomize();
+	clrscr();
+	for(i=0;i<10000;i++)
+	{
+		x[3]=i%10;
+		x[2]=i/10%10;
+		x[1]=i/10/10%10;
+		x[0]=i/10/10/10%10;
+		for(j=0;j<10;j++)
+		{
+			y[j]=0;
+		}
+		y[x[0]]++;
+		y[x[1]]++;
+		y[x[2]]++;
+		y[x[3]]++;
+		for(j=0;j<10;j++)
+		{
+			if(y[j]>1)
+			{
+				table[i]=org_table[i]=1;
+			}
+		}
+	/*	if(table[i]==1)
+		{
+			printf("no");
+		}
+		printf("%1d %1d %1d %1d",(int)x[0],(int)x[1],(int)x[2],(int)x[3]);
+		getch();*/
+	}
+	do
+	{
+		printf("Please enter your number:");
+		scanf("%1d%1d%1d%1d",&player[0],&player[1],&player[2],&player[3]);
+		for(i=0;i<10;i++)
+		{
+			y[i]=0;
+		}
+		for(i=0;i<4;i++)
+		{
+			y[player[i]]++;
+		}
+		roung_number=0;
+		for(i=0;i<10;i++)
+		{
+			if(y[i]>1)
+			{
+				   roung_number=1;
+			}
+		}
+	}while(roung_number==1);
+	for(;;)
+	{
+	counter2=0;
+	do
+	{
+		counter2++;
+		do
+		{
+			gass_number=random(10000);
+		}while(table[gass_number]==1);
+		gass[3]=gass_number%10;
+		gass[2]=gass_number/10%10;
+		gass[1]=gass_number/10/10%10;
+		gass[0]=gass_number/10/10/10%10;
+		a=b=0;
+		for(i=0;i<4;i++)
+		{
+			for(j=0;j<4;j++)
+			{
+				if(gass[i]==player[j])
+				{
+					if(i==j)
+					{
+						a++;
+					}
+					else
+					{
+						b++;
+					}
+				}
+			}
+		}
+		counter=0;
+		for(i=0;i<10000;i++)
+		{
+			if(table[i]==0)
+			{
+				counter++;
+				x[3]=i%10;
+				x[2]=i/10%10;
+				x[1]=i/10/10%10;
+				x[0]=i/10/10/10%10;
+				c=d=0;
+				for(j=0;j<4;j++)
+				{
+					for(k=0;k<4;k++)
+					{
+						if(x[j]==gass[k])
+						{
+							if(j==k)
+							{
+								c++;
+							}
+							else
+							{
+								d++;
+							}
+						}
+					}
+				}
+				if(a!=c||b!=d)
+				{
+					table[i]=1;
+				}
+			}
+		}
+		printf("%4d numbers gass %1d%1d%1d%1d -->%1dA%1dB\n",
+			  counter,gass[0],gass[1],gass[2],gass[3],a,b);
+/*		getch();*/
+	}while(a!=4);
+	printf("I gass %2d times!\n",counter2);
+	getch();
+	for(i=0;i<10000;i++)
+	{
+		table[i]=org_table[i];
+	}
+	}
+}
